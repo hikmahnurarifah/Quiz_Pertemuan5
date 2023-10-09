@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program Pemesanan Coffee</title>
+    <style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    input[type=text], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+    }
+
+    input[type=submit] {
+        background-color: #aa7804;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+    }
+
+    input[type=submit]:hover {
+        background-color: #aa7804;
+    }
+
+    .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+    .col-25 {
+        float: left;
+        width: 25%;
+        margin-top: 6px;
+    }
+
+    .col-75 {
+        float: left;
+        width: 75%;
+        margin-top: 6px;
+    }
+
+    /* Clear floats after the columns */
+    .row::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .col-100 {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px
+    }
+
+    .label-hasil {
+        padding: 12px 20px;
+        width: 100%;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        border-radius: 4px;
+        resize: vertical;
+        display: inline-block;
+    }
+
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+    .col-25, .col-75, .col-100, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+    }
+
+    </style>
+    <script>
+    function tampilHasil() {
+    var nama = document.getElementById("nama").value;
+    var alamat = document.getElementById("alamatPemesan").value;
+    var jenisKopi = document.getElementById("jenisKopi").value;
+
+    var hargaKopi = 0;
+    switch (jenisKopi) {
+        case "kopiarabika":
+            hargaKopi = 10000;
+            break;
+        case "kopirobusta":
+            hargaKopi = 15000;
+            break;
+        case "kopiliberika":
+            hargaKopi = 20000;
+            break;
+        case "kopiekselsa":
+            hargaKopi = 25000;
+            break;
+    }
+
+    var namaJenisKopi = {
+        kopiarabika: "Kopi Arabika (Rp10.000)",
+        kopirobusta: "Kopi Robusta (Rp15.000)",
+        kopiliberika: "Kopi Liberika (Rp20.000)",
+        kopiekselsa: "Kopi Ekselsa (Rp25.000)",
+    };
+
+    var totalHarga = hargaKopi;
+
+    var makananPelengkap = [];
+    var makananPelengkap1 = document.getElementById("makananPelengkap1").checked;
+    var makananPelengkap2 = document.getElementById("makananPelengkap2").checked;
+    var makananPelengkap3 = document.getElementById("makananPelengkap3").checked;
+
+    if (makananPelengkap1) {
+        makananPelengkap.push("Cake (Rp5.000)");
+        totalHarga += 5000;
+    }
+    if (makananPelengkap2) {
+        makananPelengkap.push("Brownies (Rp10.000)");
+        totalHarga += 10000;
+    }
+    if (makananPelengkap3) {
+        makananPelengkap.push("Dalgona Candy (Rp15.000)");
+        totalHarga += 15000;
+    }
+    
+    var hasil = "Nama: <span class='label-hasil'>" + nama + "</span><br>";
+    hasil += "Alamat: <span class='label-hasil'>" + alamat + "</span><br>";
+    hasil += "Pesanan Kopi: <span class='label-hasil'>" + namaJenisKopi[jenisKopi] + "</span><br>";
+
+    if (makananPelengkap.length > 0) {
+    hasil += "Makanan Pelengkap: <span class='label-hasil'>" + makananPelengkap.join(", ") + "</span><br>";
+    }
+
+    hasil += "Total: <span class='label-hasil'>" + "Rp" + totalHarga + "</span>";
+
+    document.getElementById("hasil").innerHTML = hasil;
+}
+
+    </script> 
+</head>
+<body>
+
+<h2>Form Pemesanan Coffee</h2>
+
+<div class="container">
+  <form action="/action_page.php">
+  <div class="row">
+    <div class="col-25">
+      <label for="nama">Nama Lengkap Pemesan</label>
+    </div>
+    <div class="col-75">
+      <input type="text" id="nama" name="nama" placeholder="Masukan Nama Anda ...">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-25">
+      <label for="jenisKopi">Pilih Jenis Kopi</label>
+    </div>
+    <div class="col-75">
+      <select id="jenisKopi" name="jenisKopi">
+        <option value="kopiarabika">Kopi Arabika</option>
+        <option value="kopirobusta">Kopi Robusta</option>
+        <option value="kopiliberika">Kopi Liberika</option>
+        <option value="kopiekselsa">Kopi Ekselsa</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-25">
+      <label for="alamatPemesan">Alamat Pemesan</label>
+    </div>
+    <div class="col-75">
+      <textarea id="alamatPemesan" name="alamatPemesan" placeholder="Alamat Pemesan.." style="height:200px"></textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-25">
+      <label for="ukuran">Makanan Pelengkap</label>
+    </div>
+    <div class="col-25">
+        <input type="checkbox" id="makananPelengkap1" name="makananPelengkap1" value="Cake">
+        <label for="vehicle1"> Cake</label><br>
+        <input type="checkbox" id="makananPelengkap2" name="makananPelengkap2" value="Brownies">
+        <label for="vehicle2"> Brownies</label><br>
+        <input type="checkbox" id="makananPelengkap3" name="makananPelengkap3" value="Dalgona Candy">
+        <label for="vehicle3"> Dalgona Candy</label>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <input type="submit" onClick="tampilHasil()" value="Simpan" class="simpan">
+  </div>
+  </form>
+</div>
+
+<div class="row">
+    <h2 style="text-align: left;">Hasil Pemesanan Coffee</h2>
+    <div class="col-100">
+        <p id="hasil" name="hasil"></p>
+    </div>
+</div>
+
+</body>
+</html>
